@@ -69,6 +69,13 @@ userControllersObject.UserGetInfo( app, message, Http, logger, db, User );
 // Update User Information.
 userControllersObject.UserUpdateInfo( app, message, Http, logger, db, User );
 
+// User Login Information.
+userControllersObject.userLoginInfo( app, message, Http, logger, db, User );
+
+// User Logout Information.
+userControllersObject.userLogoutInfo( app, message, Http, logger, db, User );
+
+
 app.use(app.oauth.errorHandler());
 
 app.listen( config.mode.PORT , () => 	logger.info('listening port: ' + config.mode.PORT ));
