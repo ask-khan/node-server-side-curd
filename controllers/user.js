@@ -41,7 +41,7 @@ User.prototype.UserCreated = ( app, message, Http, logger, db, User ) => {
 	 * @apiSuccess {Object} Sucess message with status code.
 	 */
 	
-	app.post('/userSave', (req, res) => {
+	app.post('/userSave',app.oauth.authorise(), (req, res) => {
 
 		var newUser = new User({
   		fname: req.body.firstname,
@@ -95,7 +95,7 @@ User.prototype.UserDeleted = ( app, message, Http, logger, db, User ) => {
 	 * @apiSuccess {Object} Sucess message with status code.
 	 */
 
-	app.get('/userDelete/:id', (req, res) => {
+	app.get('/userDelete/:id', app.oauth.authorise(), (req, res) => {
 
 		User.findByIdAndRemove({ _id: req.params.id  },( err ) => {
 			
@@ -138,7 +138,7 @@ User.prototype.UserGetInfo = ( app, message, Http, logger, db, User ) => {
 	 *
 	 * @apiSuccess {Object} Sucess message with status code.
 	 */
-	app.get( '/userInfo/',( req, res ) => {
+	app.get( '/userInfo/', app.oauth.authorise(),( req, res ) => {
 
 		User.find({}, ( err, doc ) => {
 			if ( err ) {
@@ -183,13 +183,13 @@ User.prototype.UserUpdateInfo = ( app, message, Http, logger, db, User ) => {
 	 *
 	 * @apiSuccess {Object} Sucess message with status code.
 	 */
-	app.get('/UserUpdateInfo/:id', ( req, res ) => {
+	app.get('/UserUpdateInfo/:id', app.oauth.authorise(), ( req, res ) => {
 		
 		User.findOneAndUpdate({ _id: req.params.id }, { $set: { fname: 'Ahmed Saboor Khan' }}, ( err, doc ) => {
 			
 			if ( err ) {
 				
-				var response = {};
+			var response = {};
 	  		response.message = message.UserNotUpdated;
 	  		response.status = Http.BADREQUEST;
 
@@ -197,7 +197,7 @@ User.prototype.UserUpdateInfo = ( app, message, Http, logger, db, User ) => {
 
 			} else {
 
-				var response = {};
+			var response = {};
 	  		response.message = message.UserUpdated;
 	  		response.status = Http.OK;
 
@@ -208,6 +208,5 @@ User.prototype.UserUpdateInfo = ( app, message, Http, logger, db, User ) => {
 	});
 
 };
-
 
 module.exports = User;
