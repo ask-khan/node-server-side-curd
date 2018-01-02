@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 // Create A Schema
 var userSchema = new Schema({
   fname: String,
-  lname: String
+  lname: String,
+  username: String,
+  password: String,
+  email: String
 });
 
 // Create Model.
